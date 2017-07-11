@@ -330,7 +330,12 @@ int in_cpu_collect(struct flb_input_instance *i_ins,
      */
     msgpack_pack_array(&i_ins->mp_pck, 2);
     flb_pack_time_now(&i_ins->mp_pck);
-    msgpack_pack_map(&i_ins->mp_pck, (ctx->n_processors * 3 ) + 3);
+    msgpack_pack_map(&i_ins->mp_pck, (ctx->n_processors * 3 ) + 4);
+
+    /* Number of Cores */
+    msgpack_pack_str(&i_ins->mp_pck, 4);
+    msgpack_pack_str_body(&i_ins->mp_pck, "core", 4);
+    msgpack_pack_int32(&i_ins->mp_pck, ctx->n_processors);
 
     /* All CPU */
     msgpack_pack_str(&i_ins->mp_pck, 5);
